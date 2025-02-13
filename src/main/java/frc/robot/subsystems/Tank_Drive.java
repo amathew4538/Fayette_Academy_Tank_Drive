@@ -41,7 +41,7 @@ public class Tank_Drive extends SubsystemBase{
     public Command stop(){
         return runOnce(
             () -> {
-                m_robotDrive.tankDrive(0, 0);
+                m_robotDrive.arcadeDrive(0, 0);
             });
     }
 }
