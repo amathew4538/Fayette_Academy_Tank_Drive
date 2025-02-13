@@ -33,28 +33,6 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
   }
-
-  private Command forward(){
-    return m_tankDrive.forward();
-  }
-
-  private Command backward(){
-    return m_tankDrive.backward();
-  }
-
-  private Command left(){
-    return m_tankDrive.left();
-  }
-
-  private Command right(){
-    return m_tankDrive.right();
-  }
-
-  private Command stop(){
-    return m_tankDrive.stop();
-  }
-
-
   /*
    * Use this method to define your trigger->command mappings. Triggers can be created via the
    * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
@@ -69,12 +47,12 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    new Trigger(() -> m_driverController.getLeftY() > 0.5).whileTrue(forward());
-    new Trigger(() -> m_driverController.getLeftY() < -0.5).whileTrue(backward());
-    new Trigger(() -> m_driverController.getLeftX() > 0.5).whileTrue(left());
-    new Trigger(() -> m_driverController.getLeftX() < -0.5).whileTrue(right());
+    new Trigger(() -> m_driverController.getLeftY() > 0.5).whileTrue(m_tankDrive.forward());
+    new Trigger(() -> m_driverController.getLeftY() < -0.5).whileTrue(m_tankDrive.backward());
+    new Trigger(() -> m_driverController.getLeftX() > 0.5).whileTrue(m_tankDrive.left());
+    new Trigger(() -> m_driverController.getLeftX() < -0.5).whileTrue(m_tankDrive.right());
 
-    new Trigger(() -> m_driverController.getLeftY() < 0.5 && m_driverController.getLeftY() > -0.5 && m_driverController.getLeftX() < 0.5 && m_driverController.getLeftX() > -0.5).whileTrue(stop());
+    new Trigger(() -> m_driverController.getLeftY() < 0.5 && m_driverController.getLeftY() > -0.5 && m_driverController.getLeftX() < 0.5 && m_driverController.getLeftX() > -0.5).whileTrue(m_tankDrive.stop());
 
   }
 
