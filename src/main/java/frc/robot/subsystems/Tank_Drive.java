@@ -11,18 +11,19 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 public class Tank_Drive extends SubsystemBase{
     private DifferentialDrive m_robotDrive;
-    private final SparkMax m_leftFrontMotor = new SparkMax(6, MotorType.kBrushless);
-    private final SparkMax m_rightFrontMotor = new SparkMax(7, MotorType.kBrushless);
-    private final SparkMax m_leftRearMotor = new SparkMax(8, MotorType.kBrushless);
-    private final SparkMax m_rightRearMotor = new SparkMax(9, MotorType.kBrushless);
+    private final SparkMax m_leftFrontMotor = new SparkMax(11, MotorType.kBrushless);
+    private final SparkMax m_rightFrontMotor = new SparkMax(12, MotorType.kBrushless);
+    private final SparkMax m_leftRearMotor = new SparkMax(13, MotorType.kBrushless);
+    private final SparkMax m_rightRearMotor = new SparkMax(14, MotorType.kBrushless);
     SparkMaxConfig leftConfig = new SparkMaxConfig();
     SparkMaxConfig rightConfig = new SparkMaxConfig();
 
 
     public Tank_Drive() {
         leftConfig.follow(m_leftRearMotor);
-        rightConfig.inverted(true);
-        rightConfig.follow(m_rightRearMotor);
+        rightConfig
+            .inverted(true)
+            .follow(m_rightRearMotor);
 
         m_leftFrontMotor.configure(leftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_rightFrontMotor.configure(rightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -30,31 +31,10 @@ public class Tank_Drive extends SubsystemBase{
         m_robotDrive = new DifferentialDrive(m_leftFrontMotor, m_rightFrontMotor);
     }
 
-    public Command forward(){
-        return runOnce(
+    public Command drive(double speed, double rotation){
+        return run(
             () -> {
-                m_robotDrive.tankDrive(1, 1);
-            });
-    }
-
-    public Command backward(){
-        return runOnce(
-            () -> {
-                m_robotDrive.tankDrive(-1, -1);
-            });
-    }
-
-    public Command left(){
-        return runOnce(
-            () -> {
-                m_robotDrive.tankDrive(-1, 1);
-            });
-    }
-
-    public Command right(){
-        return runOnce(
-            () -> {
-                m_robotDrive.tankDrive(1, -1);
+                m_robotDrive.arcadeDrive(speed, rotation);
             });
     }
 

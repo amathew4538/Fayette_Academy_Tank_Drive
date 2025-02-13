@@ -46,14 +46,7 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
-
-    new Trigger(() -> m_driverController.getLeftY() > 0.5).whileTrue(m_tankDrive.forward());
-    new Trigger(() -> m_driverController.getLeftY() < -0.5).whileTrue(m_tankDrive.backward());
-    new Trigger(() -> m_driverController.getLeftX() > 0.5).whileTrue(m_tankDrive.left());
-    new Trigger(() -> m_driverController.getLeftX() < -0.5).whileTrue(m_tankDrive.right());
-
-    new Trigger(() -> m_driverController.getLeftY() < 0.5 && m_driverController.getLeftY() > -0.5 && m_driverController.getLeftX() < 0.5 && m_driverController.getLeftX() > -0.5).whileTrue(m_tankDrive.stop());
-
+    m_tankDrive.setDefaultCommand(m_tankDrive.drive(m_driverController.getLeftY(), m_driverController.getRightX()));
   }
 
   /**
